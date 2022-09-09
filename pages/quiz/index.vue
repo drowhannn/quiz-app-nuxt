@@ -6,29 +6,66 @@
   </div>
   <div v-else-if="isFetched">
     <div
-      class="w-screen h-screen bg-amber-100 flex flex-col items-center justify-center"
+      class="w-screen min-h-screen bg-amber-100 flex flex-col items-center justify-center overflow-hidden"
     >
       <div
-        class="relative bg-white w-4/6 h-5/6 rounded-lg p-5 flex flex-col items-center justify-around"
+        class="relative bg-white w-screen h-screen sm:w-4/6 sm:h-5/6 rounded-lg p-5 flex flex-col items-center justify-between sm:justify-center"
       >
-        <NuxtLink to="/" class="text-7xl text-amber-500 font-bold">
+      <div
+          class="pt-6 text-orange-500 uppercase text-xs flex w-full items-center justify-around sm:my-5"
+        >
+          <p class="flex items-center flex-col sm:flex-row">
+            <span>Ques: </span>
+            <strong class="ml-1">{{ number }}</strong>
+          </p>
+          <p class="flex items-center flex-col sm:flex-row">
+            <span>Difficulty: </span>
+            <strong class="ml-1">{{ difficulty }}</strong>
+          </p>
+          <p class="flex items-center flex-col sm:flex-row">
+            <span>Type: </span>
+            <strong class="ml-1">{{
+              type === 'multiple' ? 'Multiple' : 'True / False'
+            }}</strong>
+          </p>
+          <p class="flex items-center flex-col sm:flex-row">
+            <span>Score: </span>
+            <strong class="ml-1"
+              >{{ quizState?.score }} /
+              {{
+                hasChosenAnswer
+                  ? quizState?.currentIndex + 1
+                  : quizState?.currentIndex
+              }}</strong
+            >
+          </p>
+          <p class="flex items-center flex-col sm:flex-row">
+            <span>Time: </span>
+            <strong class="ml-1">{{
+              timeTaken > 3599
+                ? new Date(timeTaken * 1000).toISOString().slice(11, 19)
+                : new Date(timeTaken * 1000).toISOString().slice(14, 19)
+            }}</strong>
+          </p>
+        </div>
+        <NuxtLink to="/" class="text-4xl sm:text-5xl lg:text-6xl text-amber-500 font-bold sm:my-5">
           Qui<span class="text-yellow-500">Z</span>z<span
             class="text-yellow-500"
             >Y</span
           >
         </NuxtLink>
-        <div class="flex items-center justify-center text-orange-700 font-bold">
-          <div class="text-2xl w-11/12">
+        <div class="flex items-center justify-center text-orange-700 font-bold sm:my-5">
+          <div class=" text-xl sm:text-2xl w-11/12">
             <span class="mr-2">Q.{{ quizState?.currentIndex + 1 }} </span>
             <span
               v-html="quizState?.questions[quizState?.currentIndex]?.question"
             ></span>
           </div>
         </div>
-        <div class="grid grid-cols-2 items-center gap-6">
+        <div class="grid grid-cols-2 items-center gap-6 sm:my-5">
           <button
             @click="checkAnswer(index)"
-            class="bg-amber-500 text-white font-semibold py-3 px-6 rounded-3xl border enabled:hover:border-amber-500 enabled:hover:text-amber-500 enabled:hover:bg-transparent transition ease-in duration-150 text-xl"
+            class="bg-amber-500 text-white font-semibold py-3 px-6 rounded-3xl border enabled:hover:border-amber-500 enabled:hover:text-amber-500 enabled:hover:bg-transparent transition ease-in duration-150 text-sm sm:text-xl"
             v-for="(choice, index) in quizState?.currentChoices"
             :class="{
               'bg-red-500':
@@ -38,6 +75,7 @@
               'bg-green-500':
                 quizState?.correctIndex === index && hasChosenAnswer,
               'cursor-no-drop': hasChosenAnswer,
+              'mb-16':!hasChosenAnswer
             }"
             :disabled="hasChosenAnswer"
           >
@@ -63,43 +101,7 @@
             >
           </div>
         </div>
-        <div
-          class="absolute top-0 right-0 pt-6 text-orange-500 uppercase text-xs flex w-full items-center justify-around"
-        >
-          <p class="flex items-center">
-            <span>Ques: </span>
-            <strong class="ml-1">{{ number }}</strong>
-          </p>
-          <p class="flex items-center">
-            <span>Difficulty: </span>
-            <strong class="ml-1">{{ difficulty }}</strong>
-          </p>
-          <p class="flex items-center">
-            <span>Type: </span>
-            <strong class="ml-1">{{
-              type === 'multiple' ? 'Multiple Choice' : 'True / False'
-            }}</strong>
-          </p>
-          <p class="flex items-center">
-            <span>Score: </span>
-            <strong class="ml-1"
-              >{{ quizState?.score }} /
-              {{
-                hasChosenAnswer
-                  ? quizState?.currentIndex + 1
-                  : quizState?.currentIndex
-              }}</strong
-            >
-          </p>
-          <p class="flex items-center">
-            <span>Time Elapsed: </span>
-            <strong class="ml-1">{{
-              timeTaken > 3599
-                ? new Date(timeTaken * 1000).toISOString().slice(11, 19)
-                : new Date(timeTaken * 1000).toISOString().slice(14, 19)
-            }}</strong>
-          </p>
-        </div>
+        
         <div
           v-if="hasChosenAnswer"
           class="bg-white p-5 flex flex-col gap-3 items-center justify-center"
@@ -118,7 +120,7 @@
           >
             Next
           </button>
-          <div v-else class="flex flex-col items-center gap-2">
+          <div v-else class="flex flex-col w-full items-center gap-2">
             <p>
               Your final score is <strong>{{ quizState?.score }} </strong> in
               {{ quizState?.questionsCount }}

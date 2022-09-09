@@ -1,26 +1,29 @@
 <template>
-  <div class="w-screen h-screen bg-amber-100 flex items-center justify-center">
+  <div>
     <div
-      class="bg-white w-4/5 h-5/6 rounded-lg p-5 flex flex-col items-center justify-around"
+    class="w-screen h-screen sm:w-screen sm:bg-amber-100 flex items-center justify-center overflow-hidden
+    "
+  >
+    <div
+      class="bg-white sm:w-10/12 lg:w-4/6 xl:w-1/2 2xl:w-1/3 flex flex-col items-center justify-center py-12 px-6 overflow-hidden  sm:rounded-3xl sm:shadow-2xl 
+      "
     >
-      <div class="text-5xl text-amber-500 font-bold">
+      <div class="text-4xl text-amber-500 font-bold my-5">
         Qui<span class="text-yellow-500">Z</span>z<span class="text-yellow-500"
           >Y</span
         >
       </div>
 
       <div>
-        <p class="uppercase text-3xl text-amber-500 font-bold">
+        <p class="uppercase text-2xl text-amber-500 font-bold my-5">
           Test your knowledge
         </p>
       </div>
 
-      <form
-        @submit.prevent="startQuiz"
-        action=""
-        class="flex p-3 flex-col w-2/4 h-3/5 items-center justify-around"
+      <div
+        class="flex p-3 flex-col w-11/12 sm:w-2/4  items-center justify-center my-5"
       >
-        <div class="flex flex-col items-baseline gap-1 w-full">
+        <div class="flex flex-col items-baseline gap-1 w-full my-3">
           <label for="number" class="text-2xl text-orange-600 font-semibold"
             >Number of Questions:</label
           >
@@ -38,7 +41,7 @@
             <option value="50">50</option>
           </select>
         </div>
-        <div class="flex flex-col items-baseline gap-1 w-full">
+        <div class="flex flex-col items-baseline gap-1 w-full  my-3">
           <label
             for="difficulty"
             class="text-2xl w-2/3 text-orange-600 font-semibold"
@@ -56,7 +59,7 @@
             <option value="hard">Hard</option>
           </select>
         </div>
-        <div class="flex flex-col items-baseline gap-1 w-full">
+        <div class="flex flex-col items-baseline gap-1 w-full  my-3">
           <label for="type" class="text-2xl w-2/3 text-orange-600 font-semibold"
             >Type:</label
           >
@@ -70,14 +73,19 @@
             <option value="boolean">True / False</option>
           </select>
         </div>
-        <button
-          class="bg-amber-500 text-white font-semibold py-3 px-6 rounded-3xl border hover:border-amber-500 hover:text-amber-500 hover:bg-transparent transition ease-in duration-150"
-        >
+       
+      </div>
+      <button
+          class="bg-amber-500 text-white font-semibold py-3 px-6 rounded-3xl border hover:border-amber-500 hover:text-amber-500 hover:bg-transparent transition ease-in duration-150 my-5"
+          @click="startQuiz"
+    
+          >
           Start Quiz
         </button>
-      </form>
     </div>
   </div>
+  </div>
+  
 </template>
 
 <script setup>
